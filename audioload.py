@@ -27,8 +27,8 @@ def browse_file():
         play_file(filepath)
 
 
-def iswav(filepath):
-    , file_extension = os.path.splitext(filepath)
+def is_wav(filepath):
+    file_extension = os.path.splitext(filepath)
     return file_extension.lower() == '.wav'
 
 
