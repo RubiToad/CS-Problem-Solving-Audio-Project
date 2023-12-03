@@ -5,17 +5,27 @@ import pygame
 import os
 import shutil
 import soundfile as sf
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 root = tk.Tk()
 root.title("Media Player")
-root.geometry("300x200")
+root.geometry("300x350")
 
 pygame.init()
+filepath = 0
+canvas_frame = tk.Frame(root)
+canvas_frame.pack(pady=10)
+fig, ax = plt.subplots(figsize=(4.8, 1.5), tight_layout=True)
+canvas = FigureCanvasTkAgg(fig, master=canvas_frame)
+canvas.get_tk_widget().pack()
 
 
 def browse_file():
     filepath = filedialog.askopenfilename(
         filetypes=[("mp3 files", ".mp3"), ("Video Files", ".mp4"), (".wav files", ".wav"), (".ogg files", ".ogg")])
+
     if filepath:
         if not is_wav(filepath):
             print("File is not WAV. Converting to WAV...")
@@ -24,12 +34,34 @@ def browse_file():
                 print("File is now WAV")
         else:
             print("File is WAV")
+        display_time_waveform(filepath)
         play_file(filepath)
+
+def display_time_waveform(filepath):
+    audio_data, sample_rate = sf.read(filepath, dtype='int16')
+    audio_data = audio_data / np.max(np.abs(audio_data), axis=0)
+
+    duration = len(audio_data) / sample_rate
+    time_values = np.linspace(0., duration, len(audio_data))
+
+    ax.clear()
+    ax.plot(time_values, audio_data, color="blue", linewidth=2)
+    ax.axhline(y=0, color='gray', linestyle='--', linewidth=1)
+    ax.set_xlabel('Time (seconds)')
+    ax.set_ylabel('Amplitude')
+
+    canvas.draw()
+
+    duration_text = f"Duration: {duration:.2f} seconds" + "\n" + filepath
+    canvas.get_tk_widget().delete("duration_label")
+    duration_label = tk.Label(root, text=duration_text, font=('Helvetica', 10), fg="black", bd=5)
+    duration_label.pack(pady=10)
+    duration_label.bind("<Configure>", lambda e: canvas.draw())
 
 
 def is_wav(filepath):
-    file_extension = os.path.splitext(filepath)
-    return file_extension.lower() == '.wav'
+    _, file_extension = os.path.splitext(filepath)
+    return str(file_extension).lower() == '.wav'
 
 
 def wav_convert(filepath):
