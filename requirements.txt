@@ -1,0 +1,6 @@
+cffi==1.16.0
+ffmpeg==1.4
+pycparser==2.21
+pydub==0.25.1
+pygame==2.5.2
+soundfile==0.12.1

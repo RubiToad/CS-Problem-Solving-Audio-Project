@@ -17,7 +17,7 @@ root.geometry("300x200")
 
 pygame.init()
 
-pydubLogger()
+# pydubLogger()
 
 def browse_file():
     filepath = filedialog.askopenfilename(
@@ -83,4 +83,4 @@ stop_button.pack()
 about_us_button = tk.Button(root, text="About Media Player", command=about_us)
 about_us_button.pack()
 
-
+# root.mainloop()
