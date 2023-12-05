@@ -5,20 +5,26 @@ import pygame # Audio can also be played with the pydub library
 import os
 import shutil
 import soundfile as sf
-import matplotlib.pyplot as plt
-import numpy as np
+import matplotlib.pyplot as plt # For frequencies
+import scipy.io
+from scipy.io import wavfile # For frequencies
+import numpy as np # For frequencies
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from audioloadClean import *
 
-root = tk.Tk()
+from audioloadClean import *
+from frequencies import *
+
+root = tk.Tk() # For tkinter
 root.title("Media Player")
 root.geometry("300x350")
 
-pygame.init()
-filepath = 0
+pygame.init() # For media player
+
+filepath = 0 # For browse_file
+
 canvas_frame = tk.Frame(root)
 canvas_frame.pack(pady=10)
-fig, ax = plt.subplots(figsize=(4.8, 1.5), tight_layout=True)
+fig, ax = plt.subplots(figsize=(4.8, 1.5), tight_layout=True) # for display_time_waveform
 canvas = FigureCanvasTkAgg(fig, master=canvas_frame)
 canvas.get_tk_widget().pack()
 
@@ -39,9 +45,11 @@ def browse_file():
             print("File is WAV")
             filepath = convert_1chan(filepath)
         display_time_waveform(filepath)
+
         play_file(filepath)
 
 def display_time_waveform(filepath):
+    # Uses soundfile, numpy, and matplotlib
     audio_data, sample_rate = sf.read(filepath, dtype='int16')
     audio_data = audio_data / np.max(np.abs(audio_data), axis=0)
 

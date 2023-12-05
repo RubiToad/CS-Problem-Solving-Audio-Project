@@ -1,4 +1,5 @@
 # Imports for cleaning meta-data
+# From L26
 ##
 from os import path
 from pydub import AudioSegment
@@ -20,8 +21,9 @@ def debugg(fstring):
 
 def convert_1chan(filepath):
     debugg("convert_1chan")
-    if is_wav(filepath):  # comment out for prod
-        debugg("is_wav")
+    # TODO: if is_wav(filepath):  # comment out for prod
+    if is_1chan(filepath) != 1:
+        debugg("is_1chan false")
         raw_audio = AudioSegment.from_file(
             filepath,
             format="wav"  # only execute AFTER converting to .wav
@@ -42,4 +44,16 @@ def convert_1chan(filepath):
 
         return dst
     else:
-        pass
+        debugg("is_1chan true")
+        return filepath
+
+def is_1chan(filepath):
+    # TODO: if is_wav(filepath): # comment out for prod
+    raw_audio = AudioSegment.from_file(
+        filepath,
+        format="wav"
+    )
+    # Reduce channels to one
+    return 1 == raw_audio.channels # ?1:0
+    pass
+
