@@ -1,13 +1,14 @@
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
-import pygame
+import pygame # Audio can also be played with the pydub library
 import os
 import shutil
 import soundfile as sf
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from audioloadClean import *
 
 root = tk.Tk()
 root.title("Media Player")
@@ -21,6 +22,7 @@ fig, ax = plt.subplots(figsize=(4.8, 1.5), tight_layout=True)
 canvas = FigureCanvasTkAgg(fig, master=canvas_frame)
 canvas.get_tk_widget().pack()
 
+# pydubLogger()
 
 def browse_file():
     filepath = filedialog.askopenfilename(
@@ -32,8 +34,10 @@ def browse_file():
             filepath = wav_convert(filepath)
             if is_wav(filepath):
                 print("File is now WAV")
+                filepath = convert_1chan(filepath)
         else:
             print("File is WAV")
+            filepath = convert_1chan(filepath)
         display_time_waveform(filepath)
         play_file(filepath)
 
@@ -60,13 +64,12 @@ def display_time_waveform(filepath):
 
 
 def is_wav(filepath):
-    _, file_extension = os.path.splitext(filepath)
-    return str(file_extension).lower() == '.wav'
-
+    file_extension = os.path.splitext(filepath)[1]
+    return file_extension.lower() == '.wav'
 
 def wav_convert(filepath):
     wav_filepath = filepath.replace(os.path.splitext(filepath)[1], '.wav')
-    shutil.copyfile(filepath, wav_filepath)
+    shutil.copyfile(filepath, wav_filepath) # from=filepath, to=wav_filepath
     return wav_filepath
 
 
