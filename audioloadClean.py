@@ -6,7 +6,7 @@ from pydub.playback import play
 from audioload import *
 
 
-def pydubLogger():
+def pydub_logger():
     # Pydub comes with its own logger.
     import logging
 
@@ -20,27 +20,26 @@ def debugg(fstring):
 
 def convert_1chan(filepath):
     debugg("convert_1chan")
-    # if is_wav(filepath):  # comment out for prod
-    raw_audio = AudioSegment.from_file(
-        filepath,
-        format="wav"  # only execute AFTER converting to .wav
-    )
-    # Reduce channels to one
-    channel_count = raw_audio.channels
-    debugg(f"Channel count before convert_1chan: {channel_count}")
-    mono_wav = raw_audio.set_channels(1)
+    if is_wav(filepath):  # comment out for prod
+        debugg("is_wav")
+        raw_audio = AudioSegment.from_file(
+            filepath,
+            format="wav"  # only execute AFTER converting to .wav
+        )
+        # Reduce channels to one
+        channel_count = raw_audio.channels
+        debugg(f"Channel count before convert_1chan: {channel_count}")
+        mono_wav = raw_audio.set_channels(1)
 
-    # Export
-    dst = str(os.path.splitext(filepath)[1] + "_mono.wav")
-    mono_wav.export(dst,format="wav")
+        # Export
+        dst = str(os.path.splitext(filepath)[0] + "_mono.wav")
+        mono_wav.export(dst,format="wav")
 
-    # Debug. Remove in prod.
-    mono_wav_audio = AudioSegment.from_file(dst, format = "wav")
-    channel_count = mono_wav_audio.channels
-    debugg(f"Channel count after convert_1chan: {channel_count}")
+        # Debug. Remove in prod.
+        mono_wav_audio = AudioSegment.from_file(dst, format = "wav")
+        channel_count = mono_wav_audio.channels
+        debugg(f"Channel count after convert_1chan: {channel_count}")
 
-    return dst
-# def wav_convert(filepath):
-#    wav_filepath = filepath.replace(os.path.splitext(filepath)[1], '.wav')
-#    shutil.copyfile(filepath, wav_filepath) # from=filepath, to=wav_filepath
-#    return wav_filepath
+        return dst
+    else:
+        pass
