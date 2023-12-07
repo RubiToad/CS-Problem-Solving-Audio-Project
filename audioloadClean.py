@@ -2,13 +2,15 @@
 # From L26
 ##
 from os import path
-from pydub import AudioSegment  # Allegedly unused, yet the code breaks without it
+from pydub import AudioSegment
 from pydub.playback import play
-from audioload import *
+import os
+# from audioload import is_wav
 
 
+# TODO: I saw this online and couldn't figure out how to use it
+#  Pydub comes with its own logger.
 def pydub_logger():
-    # Pydub comes with its own logger.
     import logging
 
     l = logging.getLogger("pydub.converter")
@@ -22,7 +24,7 @@ def debugg(fstring):
 
 
 def convert_1chan(filepath):
-    debugg("convert_1chan")
+    debugg(f"convert_1chan: {filepath}\n")
     # TODO: if is_wav(filepath):  # comment out for prod
     if is_1chan(filepath) != 1:
         debugg("is_1chan false")
@@ -52,7 +54,8 @@ def convert_1chan(filepath):
 
 def is_1chan(filepath):
     # TODO: if is_wav(filepath): # comment out for prod
-    raw_audio = AudioSegment.from_file(
+    debugg(f"is_1chan: {filepath}")
+    raw_audio = AudioSegment.from_file( # TODO: This line throws FileNotFoundError.
         filepath,
         format="wav"
     )

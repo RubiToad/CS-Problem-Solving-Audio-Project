@@ -1,34 +1,35 @@
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
-import pygame # Audio can also be played with the pydub library
+import pygame  # Audio can also be played with the pydub library
 import os
 import shutil
 import soundfile as sf
-import matplotlib.pyplot as plt # For frequencies
+import matplotlib.pyplot as plt  # For frequencies
 import scipy.io
-from scipy.io import wavfile # For frequencies
-import numpy as np # For frequencies
+from scipy.io import wavfile  # For frequencies
+import numpy as np  # For frequencies
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
-from audioloadClean import *
-from frequencies import compute_frequencies
+from audioloadClean import convert_1chan
+from frequencies import compute_frequencies # Only need the one function
 
-root = tk.Tk() # For tkinter
+root = tk.Tk()  # For tkinter
 root.title("Media Player")
 root.geometry("300x350")
 
-pygame.init() # For media player
+pygame.init()  # For media player
 
-filepath = 0 # For browse_file
+filepath = 0  # For browse_file
 
 canvas_frame = tk.Frame(root)
 canvas_frame.pack(pady=10)
-fig, ax = plt.subplots(figsize=(4.8, 1.5), tight_layout=True) # for display_time_waveform
+fig, ax = plt.subplots(figsize=(4.8, 1.5), tight_layout=True)  # for display_time_waveform
 canvas = FigureCanvasTkAgg(fig, master=canvas_frame)
 canvas.get_tk_widget().pack()
 
 # pydubLogger()
+
 
 def browse_file():
     filepath = filedialog.askopenfilename(
@@ -40,13 +41,14 @@ def browse_file():
             filepath = wav_convert(filepath)
             if is_wav(filepath):
                 print("File is now WAV")
-                filepath = convert_1chan(filepath)
         else:
             print("File is WAV")
-            filepath = convert_1chan(filepath)
+        filepath = convert_1chan(filepath)  # convert_1chan includes is_1chan check
         display_time_waveform(filepath)
-        compute_frequencies(filepath)  # in frequencies.py
+        compute_frequencies(filepath)
+
         play_file(filepath)
+
 
 def display_time_waveform(filepath):
     # Uses soundfile, numpy, and matplotlib
@@ -76,9 +78,10 @@ def is_wav(filepath):
     file_extension = os.path.splitext(filepath)[1]
     return file_extension.lower() == '.wav'
 
+
 def wav_convert(filepath):
     wav_filepath = filepath.replace(os.path.splitext(filepath)[1], '.wav')
-    shutil.copyfile(filepath, wav_filepath) # from=filepath, to=wav_filepath
+    shutil.copyfile(filepath, wav_filepath)  # from=filepath, to=wav_filepath
     return wav_filepath
 
 
