@@ -2,7 +2,7 @@
 # From L26
 ##
 from os import path
-from pydub import AudioSegment
+from pydub import AudioSegment  # Allegedly unused, yet the code breaks without it
 from pydub.playback import play
 from audioload import *
 
@@ -15,9 +15,11 @@ def pydub_logger():
     l.setLevel(logging.DEBUG)
     l.addHandler(logging.StreamHandler())
 
+
 def debugg(fstring):
-    print(fstring) # comment out December 10
+    print(fstring)  # comment out December 10
     # pass
+
 
 def convert_1chan(filepath):
     debugg("convert_1chan")
@@ -35,10 +37,10 @@ def convert_1chan(filepath):
 
         # Export
         dst = str(os.path.splitext(filepath)[0] + "_mono.wav")
-        mono_wav.export(dst,format="wav")
+        mono_wav.export(dst, format="wav")
 
         # Debug. Remove in prod.
-        mono_wav_audio = AudioSegment.from_file(dst, format = "wav")
+        mono_wav_audio = AudioSegment.from_file(dst, format="wav")
         channel_count = mono_wav_audio.channels
         debugg(f"Channel count after convert_1chan: {channel_count}")
 
@@ -47,6 +49,7 @@ def convert_1chan(filepath):
         debugg("is_1chan true")
         return filepath
 
+
 def is_1chan(filepath):
     # TODO: if is_wav(filepath): # comment out for prod
     raw_audio = AudioSegment.from_file(
@@ -54,6 +57,5 @@ def is_1chan(filepath):
         format="wav"
     )
     # Reduce channels to one
-    return 1 == raw_audio.channels # ?1:0
+    return 1 == raw_audio.channels  # ?1:0
     pass
-
