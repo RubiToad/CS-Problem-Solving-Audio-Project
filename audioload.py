@@ -12,7 +12,7 @@ import numpy as np # For frequencies
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 from audioloadClean import *
-from frequencies import *
+from frequencies import compute_frequencies
 
 root = tk.Tk() # For tkinter
 root.title("Media Player")
@@ -45,11 +45,12 @@ def browse_file():
             print("File is WAV")
             filepath = convert_1chan(filepath)
         display_time_waveform(filepath)
-
+        compute_frequencies(filepath)  # in frequencies.py
         play_file(filepath)
 
 def display_time_waveform(filepath):
     # Uses soundfile, numpy, and matplotlib
+    # Plots waveform by time
     audio_data, sample_rate = sf.read(filepath, dtype='int16')
     audio_data = audio_data / np.max(np.abs(audio_data), axis=0)
 
