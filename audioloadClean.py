@@ -19,7 +19,7 @@ def pydub_logger():
 
 
 def debugg(fstring):
-    print(fstring)  # comment out December 10
+    print(fstring)  # TODO: comment out December 10, the due date of the project.
     # pass
 
 
