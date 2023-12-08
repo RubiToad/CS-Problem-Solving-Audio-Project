@@ -2,12 +2,11 @@ from scipy.io import wavfile  # Frequencies.py
 import numpy as np  # Frequencies.py
 import matplotlib.pyplot as plt  # Frequencies.py
 
-# from audioload import *
+# from audioload import is_wav
 from audioloadClean import debugg
 
 
 def compute_frequencies(filepath):  # main
-
     sample_rate, data = wavfile.read(filepath)
     spectrum, freqs, t, im = plt.specgram(data, Fs=sample_rate,
                                           NFFT=1024, cmap=plt.get_cmap('autumn_r'))
