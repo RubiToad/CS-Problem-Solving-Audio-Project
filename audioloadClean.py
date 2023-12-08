@@ -1,21 +1,10 @@
-# Imports for cleaning meta-data
-# From L26
-##
+# Clean metadata, and
 from os import path
-from pydub import AudioSegment
+from pydub import utils, AudioSegment
 from pydub.playback import play
 import os
-# from audioload import is_wav
-
-
-# TODO: I saw this online and couldn't figure out how to use it
-#  Pydub comes with its own logger.
-def pydub_logger():
-    import logging
-
-    l = logging.getLogger("pydub.converter")
-    l.setLevel(logging.DEBUG)
-    l.addHandler(logging.StreamHandler())
+# from audioload import is_wav # This is a circular import
+from Convert import is_wav
 
 
 def debugg(fstring):
@@ -24,14 +13,18 @@ def debugg(fstring):
 
 
 def convert_1chan(filepath):
-    debugg(f"convert_1chan: {filepath}\n")
-    # TODO: if is_wav(filepath):  # comment out for prod
+    debugg(f"convert_1chan filepath: {filepath}\n")
+
+#    AudioSegment.converter = "~/ffmpeg/ffmpeg-2023-12-07-git-f89cff96d0-full_build/bin/ffmpeg.exe"
+#    utils.get_prober_name = get_prober_name
+
     if is_1chan(filepath) != 1:
         debugg("is_1chan false")
-        raw_audio = AudioSegment.from_file(
+        raw_audio = AudioSegment.from_file(  # TODO: Don't copy-paste this raw_audio call from is_1chan.
             filepath,
             format="wav"  # only execute AFTER converting to .wav
         )
+
         # Reduce channels to one
         channel_count = raw_audio.channels
         debugg(f"Channel count before convert_1chan: {channel_count}")
@@ -53,12 +46,12 @@ def convert_1chan(filepath):
 
 
 def is_1chan(filepath):
-    # TODO: if is_wav(filepath): # comment out for prod
-    debugg(f"is_1chan: {filepath}")
-    raw_audio = AudioSegment.from_file( # TODO: This line throws FileNotFoundError.
-        filepath,
-        format="wav"
-    )
-    # Reduce channels to one
-    return 1 == raw_audio.channels  # ?1:0
-    pass
+    if is_wav(filepath):
+        debugg(f"is_1chan: {filepath}")
+        raw_audio = AudioSegment.from_file( # TODO: This line throws FileNotFoundError for mp3 files.
+            filepath,
+            format="wav"
+        )
+        # Reduce channels to one
+        return 1 == raw_audio.channels  # ?1:0
+        pass
