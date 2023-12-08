@@ -1,11 +1,10 @@
-# Imports for cleaning meta-data
-# From L26
-##
+# Clean metadata, and
 from os import path
 from pydub import AudioSegment
 from pydub.playback import play
 import os
-# from audioload import is_wav
+# from audioload import is_wav # This is a circular import
+from Convert import is_wav
 
 
 # TODO: I saw this online and couldn't figure out how to use it
@@ -24,7 +23,7 @@ def debugg(fstring):
 
 
 def convert_1chan(filepath):
-    debugg(f"convert_1chan: {filepath}\n")
+    debugg(f"convert_1chan filepath: {filepath}\n")
     # TODO: if is_wav(filepath):  # comment out for prod
     if is_1chan(filepath) != 1:
         debugg("is_1chan false")
@@ -32,6 +31,7 @@ def convert_1chan(filepath):
             filepath,
             format="wav"  # only execute AFTER converting to .wav
         )
+
         # Reduce channels to one
         channel_count = raw_audio.channels
         debugg(f"Channel count before convert_1chan: {channel_count}")
@@ -53,12 +53,12 @@ def convert_1chan(filepath):
 
 
 def is_1chan(filepath):
-    # TODO: if is_wav(filepath): # comment out for prod
-    debugg(f"is_1chan: {filepath}")
-    raw_audio = AudioSegment.from_file( # TODO: This line throws FileNotFoundError.
-        filepath,
-        format="wav"
-    )
-    # Reduce channels to one
-    return 1 == raw_audio.channels  # ?1:0
-    pass
+    if is_wav(filepath):
+        debugg(f"is_1chan: {filepath}")
+        raw_audio = AudioSegment.from_file( # TODO: This line throws FileNotFoundError for mp3 files.
+            filepath,
+            format="wav"
+        )
+        # Reduce channels to one
+        return 1 == raw_audio.channels  # ?1:0
+        pass
