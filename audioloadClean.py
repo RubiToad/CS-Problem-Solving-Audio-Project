@@ -1,4 +1,6 @@
-# Clean metadata, and
+# Imports for cleaning meta-data
+# From L26
+##
 from os import path
 from pydub import utils, AudioSegment
 from pydub.playback import play
@@ -14,10 +16,7 @@ def debugg(fstring):
 
 def convert_1chan(filepath):
     debugg(f"convert_1chan filepath: {filepath}\n")
-
-#    AudioSegment.converter = "~/ffmpeg/ffmpeg-2023-12-07-git-f89cff96d0-full_build/bin/ffmpeg.exe"
-#    utils.get_prober_name = get_prober_name
-
+    # TODO: if is_wav(filepath):  # comment out for prod
     if is_1chan(filepath) != 1:
         debugg("is_1chan false")
         raw_audio = AudioSegment.from_file(  # TODO: Don't copy-paste this raw_audio call from is_1chan.
