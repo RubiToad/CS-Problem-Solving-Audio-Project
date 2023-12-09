@@ -19,19 +19,20 @@ def pydub_logger():
 
 
 def debugg(fstring):
-    print(fstring)  # comment out December 10
+    print(fstring)  # TODO: comment out December 10, the due date of the project.
     # pass
 
 
 def convert_1chan(filepath):
-    debugg(f"convert_1chan: {filepath}\n")
+    debugg(f"convert_1chan filepath: {filepath}\n")
     # TODO: if is_wav(filepath):  # comment out for prod
     if is_1chan(filepath) != 1:
         debugg("is_1chan false")
-        raw_audio = AudioSegment.from_file(
+        raw_audio = AudioSegment.from_file(  # TODO: Don't copy-paste this raw_audio call from is_1chan.
             filepath,
             format="wav"  # only execute AFTER converting to .wav
         )
+
         # Reduce channels to one
         channel_count = raw_audio.channels
         debugg(f"Channel count before convert_1chan: {channel_count}")
@@ -53,12 +54,12 @@ def convert_1chan(filepath):
 
 
 def is_1chan(filepath):
-    # TODO: if is_wav(filepath): # comment out for prod
-    debugg(f"is_1chan: {filepath}")
-    raw_audio = AudioSegment.from_file( # TODO: This line throws FileNotFoundError.
-        filepath,
-        format="wav"
-    )
-    # Reduce channels to one
-    return 1 == raw_audio.channels  # ?1:0
-    pass
+    if is_wav(filepath):
+        debugg(f"is_1chan: {filepath}")
+        raw_audio = AudioSegment.from_file( # TODO: This line throws FileNotFoundError for mp3 files.
+            filepath,
+            format="wav"
+        )
+        # Reduce channels to one
+        return 1 == raw_audio.channels  # ?1:0
+        pass
