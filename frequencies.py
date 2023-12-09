@@ -9,7 +9,7 @@ from audioloadClean import debugg
 def compute_frequencies(filepath):  # main
     sample_rate, data = wavfile.read(filepath)
     spectrum, freqs, t, im = plt.specgram(data, Fs=sample_rate,
-                                          NFFT=1024, cmap=plt.get_cmap('autumn_r'))
+                                          NFFT=1024, cmap=plt.get_cmap('autumn_r'))  # L25 Slide 14
 
     data_in_db = frequency_check(spectrum, freqs)
     debugg(f'data_in_db {data_in_db[:10]}')
