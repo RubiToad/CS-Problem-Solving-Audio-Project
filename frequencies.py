@@ -21,13 +21,15 @@ def compute_frequencies(filepath):  # main
 
     # find an index of a max value
     index_of_max = np.argmax(data_in_db)
-
+    # Find maximum value of dB's (decibel is logarithmic) in array
     value_of_max = data_in_db[index_of_max]
     plt.plot(t[index_of_max], data_in_db[index_of_max], 'go')
 
     # slice array from a max value
+    # Slice data and time arrays to location of maximum value
     sliced_array = data_in_db[index_of_max:]
     debugg(f'sliced_array {sliced_array[:10]}')
+    # Find value which is Max -5dB (avoids measuring actual impulse)
     value_of_max_less_5 = value_of_max - 5
     value_of_max_less_5 = find_nearest_value(sliced_array, value_of_max_less_5)
 
@@ -40,8 +42,9 @@ def compute_frequencies(filepath):  # main
     index_of_max_less_25 = np.where(data_in_db == value_of_max_less_25)
 
     plt.plot(t[index_of_max_less_25], data_in_db[index_of_max_less_25], 'ro')
+    # Calculate RT20 as time it takes amplitude to drop from max (less 5dB) to max (less 25dB)
     rt20 = (t[index_of_max_less_5] - t[index_of_max_less_25])[0]
-
+    debugg(f'rt20= {rt20}')
     # extrapolate rt20 to rt60
     rt60 = 3 * rt20
 
@@ -50,7 +53,7 @@ def compute_frequencies(filepath):  # main
     plt.grid()  # show grid
     plt.show()  # show plots
 
-    print(f'The RT60 reverb time is {round(abs(rt60), 2)} seconds')
+    print(f'The RT60 reverb time at freq {int(find_target_frequency(freqs))} is {round(abs(rt60), 2)} seconds')
 
 
 def find_target_frequency(freqs):
@@ -60,8 +63,25 @@ def find_target_frequency(freqs):
         return x
 
 
+# In class, Mr. Navarro said you could use 250 for low, 1000 for mid, and 5000 for high.
+def find_low_frequency(freqs):
+    for x in freqs:
+        if x > 250:
+            break
+        return x
+
+
+def find_high_frequency(freqs):
+    for x in freqs:
+        if x > 5000:
+            break
+        return x
+
+
 # you can choose a frequency that you want to check
-def frequency_check(spectrum, freqs):
+def frequency_check(spectrum, freqs):  # Data returned will vary based in freqs. Is necessary for graphs.
+    # identify a frequency to check
+    debugg(f'freqs= {freqs}')
     debugg(f'freqs {freqs[:10]}')
     target_frequency = find_target_frequency(freqs)
     debugg(f'target_frequency {target_frequency}')

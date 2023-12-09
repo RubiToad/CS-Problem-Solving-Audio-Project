@@ -2,14 +2,15 @@ import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
 import pygame  # Audio can also be played with the pydub library
-import os
-import shutil
-import soundfile as sf
-import matplotlib.pyplot as plt  # For frequencies
+# import os  # Convert.py
+# import shutil  # Convert.py
+import soundfile as sf # For time_waveform
+import matplotlib.pyplot as plt  # For frequencies and time_waveform
 import scipy.io
 from scipy.io import wavfile  # For frequencies
-import numpy as np  # For frequencies
+import numpy as np  # For frequencies and time_waveform
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from Convert import is_wav, wav_convert
 
 from audioloadClean import convert_1chan
 from frequencies import compute_frequencies # Only need the one function
@@ -72,17 +73,6 @@ def display_time_waveform(filepath):
     duration_label = tk.Label(root, text=duration_text, font=('Helvetica', 10), fg="black", bd=5)
     duration_label.pack(pady=10)
     duration_label.bind("<Configure>", lambda e: canvas.draw())
-
-
-def is_wav(filepath):
-    file_extension = os.path.splitext(filepath)[1]
-    return file_extension.lower() == '.wav'
-
-
-def wav_convert(filepath):
-    wav_filepath = filepath.replace(os.path.splitext(filepath)[1], '.wav')
-    shutil.copyfile(filepath, wav_filepath)  # from=filepath, to=wav_filepath
-    return wav_filepath
 
 
 def play_file(filepath):

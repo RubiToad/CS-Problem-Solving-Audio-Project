@@ -2,20 +2,11 @@
 # From L26
 ##
 from os import path
-from pydub import AudioSegment
+from pydub import utils, AudioSegment
 from pydub.playback import play
 import os
-# from audioload import is_wav
-
-
-# TODO: I saw this online and couldn't figure out how to use it
-#  Pydub comes with its own logger.
-def pydub_logger():
-    import logging
-
-    l = logging.getLogger("pydub.converter")
-    l.setLevel(logging.DEBUG)
-    l.addHandler(logging.StreamHandler())
+# from audioload import is_wav # This is a circular import
+from Convert import is_wav
 
 
 def debugg(fstring):
