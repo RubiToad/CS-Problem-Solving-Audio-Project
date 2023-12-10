@@ -3,7 +3,7 @@ import numpy as np  # Frequencies.py
 import matplotlib.pyplot as plt  # Frequencies.py
 
 # from audioload import is_wav
-from audioloadClean import debugg
+from main import debugg
 
 
 def compute_frequencies(filepath):  # main

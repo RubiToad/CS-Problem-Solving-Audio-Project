@@ -1,18 +1,19 @@
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
-import pygame  # Audio can also be played with the pydub library
-# import os  # Convert.py
-# import shutil  # Convert.py
+import pygame  # Audio can also be played with the pydub library. Pygame plays files without any conversion.
+# import os  # ConvertSciPy.py
+# import shutil  # ConvertSciPy.py
 import soundfile as sf # For time_waveform
 import matplotlib.pyplot as plt  # For frequencies and time_waveform
 import scipy.io
 from scipy.io import wavfile  # For frequencies
 import numpy as np  # For frequencies and time_waveform
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from Convert import is_wav, wav_convert, compute_wav
+from ConvertSciPy import is_wav, wav_convert, compute_wav
 
-from audioloadClean import convert_1chan, debugg
+from audioloadClean import convert_1chan
+from main import debugg
 from frequencies import compute_frequencies # Only need the one function
 
 root = tk.Tk()  # For tkinter
@@ -40,17 +41,18 @@ def browse_file():
         filetypes=[("mp3 files", ".mp3"), ("Video Files", ".mp4"), (".wav files", ".wav"), (".ogg files", ".ogg")])
 
     if filepath:
-        compute_wav(filepath)
+        filepath = compute_wav(filepath)  # Must be done first.
         filepath = convert_1chan(filepath)  # Comment out Ben's functions, and .mp3 files play.
         display_time_waveform(filepath)
         compute_frequencies(filepath)  # Comment out Ben's functions, and .mp3 files play.
-        play_file(filepath)
+        play_file(filepath)  # Must be done last. Pygame can play files without conversion.
     else:
         debugg('How Did We Get Here?')
 
 
 def display_time_waveform(filepath):
     # Uses soundfile, numpy, and matplotlib
+    # Uses filepath, ax
     # Plots waveform by time
     audio_data, sample_rate = sf.read(filepath, dtype='int16')
     audio_data = audio_data / np.max(np.abs(audio_data), axis=0)
@@ -93,7 +95,7 @@ def about_us():
 
 
 browse_button = tk.Button(root, text="Load Audio File", command=browse_file)
-browse_button.pack()
+browse_button.pack()  # Place the button into the window
 
 pause_button = tk.Button(root, text="Pause", command=pause_file)
 pause_button.pack()
