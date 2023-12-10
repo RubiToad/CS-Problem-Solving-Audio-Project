@@ -91,7 +91,7 @@ def stop_file():
 
 def about_us():
     messagebox.showinfo("About Media Player",
-                        "A simple media player program created in Python using Tkinter and Pygame.")
+                        "Press the Load Audio File button and select the audio file you wish to load. If you want the audio file to stop playing, you can press pause.")
 
 
 browse_button = tk.Button(root, text="Load Audio File", command=browse_file)
@@ -106,7 +106,7 @@ resume_button.pack()
 stop_button = tk.Button(root, text="Stop", command=stop_file)
 stop_button.pack()
 
-about_us_button = tk.Button(root, text="About Media Player", command=about_us)
+about_us_button = tk.Button(root, text="How to Use", command=about_us)
 about_us_button.pack()
 
 # root.mainloop()  # Moved to main.py
