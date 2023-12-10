@@ -1,11 +1,7 @@
-# Prevent circular import between audioload.py and audioloadClean.py
+# Prevent potential circular import between audioload.py and audioloadClean.py
 import os
-import shutil
+import shutil  # TODO: Replace with Pydub.
 
-
-def is_wav(filepath):
-    file_extension = os.path.splitext(filepath)[1]
-    return file_extension.lower() == '.wav'
 
 def compute_wav(filepath):
     if not is_wav(filepath):
@@ -20,7 +16,13 @@ def compute_wav(filepath):
     return wav_filepath
 
 
+def is_wav(filepath):
+    file_extension = os.path.splitext(filepath)[1]
+    return file_extension.lower() == '.wav'
+
+
 def wav_convert(filepath):
     wav_filepath = filepath.replace(os.path.splitext(filepath)[1], '.wav')
     shutil.copyfile(filepath, wav_filepath)
+    return wav_filepath
 
