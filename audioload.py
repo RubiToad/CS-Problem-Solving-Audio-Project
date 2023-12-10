@@ -47,9 +47,9 @@ def browse_file():
                 print("File is now WAV")
         else:
             print("File is WAV")
-        filepath = convert_1chan(filepath)  # convert_1chan includes is_1chan check
+        filepath = convert_1chan(filepath)  # Comment out Ben's functions, and .mp3 files play.
         display_time_waveform(filepath)
-        compute_frequencies(filepath)
+        compute_frequencies(filepath)  # Comment out Ben's functions, and .mp3 files play.
 
         play_file(filepath)
 
