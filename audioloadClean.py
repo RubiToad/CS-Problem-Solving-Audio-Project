@@ -13,7 +13,7 @@ def debugg(fstring):
     print(fstring)  # TODO: comment out December 10, the due date of the project.
     # pass
 
-
+# convert_1chan includes is_1chan check
 def convert_1chan(filepath):
     debugg(f"convert_1chan filepath: {filepath}\n")
     # TODO: if is_wav(filepath):  # comment out for prod
@@ -47,7 +47,7 @@ def convert_1chan(filepath):
 def is_1chan(filepath):
     if is_wav(filepath):
         debugg(f"is_1chan: {filepath}")
-        raw_audio = AudioSegment.from_file( # TODO: This line throws FileNotFoundError for mp3 files.
+        raw_audio = AudioSegment.from_file( # TODO: This line throws CouldntDecodeError for mp3 files.
             filepath,
             format="wav"
         )
