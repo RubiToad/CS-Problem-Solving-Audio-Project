@@ -41,6 +41,7 @@ def browse_file():
         filetypes=[("mp3 files", ".mp3"), ("Video Files", ".mp4"), (".wav files", ".wav"), (".ogg files", ".ogg")])
 
     if filepath:
+        print(f"File name: {os.path.basename(filepath)}")
         filepath = compute_wav(filepath)  # Must be done first.
         filepath = convert_1chan(filepath)  # Comment out Ben's functions, and .mp3 files play.
         display_time_waveform(filepath)
