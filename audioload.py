@@ -10,9 +10,9 @@ import scipy.io
 from scipy.io import wavfile  # For frequencies
 import numpy as np  # For frequencies and time_waveform
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from Convert import is_wav, wav_convert
+from Convert import is_wav, wav_convert, compute_wav
 
-from audioloadClean import convert_1chan
+from audioloadClean import convert_1chan, debugg
 from frequencies import compute_frequencies # Only need the one function
 
 root = tk.Tk()  # For tkinter
@@ -37,18 +37,13 @@ def browse_file():
         filetypes=[("mp3 files", ".mp3"), ("Video Files", ".mp4"), (".wav files", ".wav"), (".ogg files", ".ogg")])
 
     if filepath:
-        if not is_wav(filepath):
-            print("File is not WAV. Converting to WAV...")
-            filepath = wav_convert(filepath)
-            if is_wav(filepath):
-                print("File is now WAV")
-        else:
-            print("File is WAV")
+        compute_wav(filepath)
         filepath = convert_1chan(filepath)  # Comment out Ben's functions, and .mp3 files play.
         display_time_waveform(filepath)
         compute_frequencies(filepath)  # Comment out Ben's functions, and .mp3 files play.
-
         play_file(filepath)
+    else:
+        debugg('How Did We Get Here?')
 
 
 def display_time_waveform(filepath):
@@ -112,4 +107,4 @@ stop_button.pack()
 about_us_button = tk.Button(root, text="About Media Player", command=about_us)
 about_us_button.pack()
 
-# root.mainloop()
+# root.mainloop()  # Moved to main.py
