@@ -48,8 +48,8 @@ def compute_frequencies(filepath):  # main
     # extrapolate rt20 to rt60
     rt60 = 3 * rt20
 
-    # TODO: optional set limits on plot
-    #  plt.xlim(0, ((round(abs(rt60), 2)) * 1.5))
+    # Benjamin decided not to set optional limits on the plot. The line below is what I would have done.
+    # plt.xlim(0, ((round(abs(rt60), 2)) * 1.5))
     plt.grid()  # show grid
     plt.show()  # show plots
 

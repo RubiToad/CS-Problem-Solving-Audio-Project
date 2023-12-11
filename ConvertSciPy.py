@@ -6,7 +6,7 @@ from main import debugg
 
 
 def compute_wav(filepath):
-    debugg(f"File name: {os.path.basename(filepath)}")
+    print(f"File name: {os.path.basename(filepath)}")
     if not is_wav(filepath):
         print("File is not WAV. Converting to WAV...")
         wav_filepath = wav_convert(filepath)

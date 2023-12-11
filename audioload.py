@@ -41,14 +41,13 @@ def browse_file():
         filetypes=[("mp3 files", ".mp3"), ("Video Files", ".mp4"), (".wav files", ".wav"), (".ogg files", ".ogg")])
 
     if filepath:
-
         filepath = compute_wav(filepath)  # Must be done first.
         filepath = convert_1chan(filepath)  # Comment out Ben's functions, and .mp3 files play.
         display_time_waveform(filepath)
         compute_frequencies(filepath)  # Comment out Ben's functions, and .mp3 files play.
         play_file(filepath)  # Must be done last. Pygame can play files without conversion.
     else:
-        debugg('How Did We Get Here?')
+        debugg('Audio file not selected')
 
 
 def display_time_waveform(filepath):
