@@ -1,5 +1,14 @@
-## Benjamin(1)
-I deleted Benjamin(1) because I had the rest of the venv included, which was unnecessary. Only the .py files should be committed. Furthermore, in that branch, I placed the python modules into the virtual environment, like a dunce!
+# SPIDAM
+TODO: Merge this file with Benjamin branch
+
+## Cooperative files
+Our program only works for files given by the professor, available in the Sample Music folder. 
+
+The lo-fi and our clap, for example, do not work.
+
+
+
+
 
 ## ffmpeg
 Include the three files in your Current Working Directory (CWD):
