@@ -1,7 +1,9 @@
 # Imports for cleaning meta-data
 # From L26
 ##
-from pydub import AudioSegment
+from os import path
+from pydub import utils, AudioSegment
+from pydub.playback import play
 import os
 # from audioload import is_wav # This is a circular import
 from ConvertSciPy import is_wav, compute_wav
