@@ -3,15 +3,13 @@ import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
 import pygame  # Audio can also be played with the pydub library. Pygame plays files without any conversion.
-# import os  # ConvertSciPy.py
-# import shutil  # ConvertSciPy.py
 import soundfile as sf # For time_waveform
 import matplotlib.pyplot as plt  # For frequencies and time_waveform
 import scipy.io
 from scipy.io import wavfile  # For frequencies
 import numpy as np  # For frequencies and time_waveform
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from ConvertSciPy import is_wav, wav_convert, compute_wav
+from Convert import is_wav, wav_convert, compute_wav
 
 from audioloadClean import convert_1chan
 from main import debugg

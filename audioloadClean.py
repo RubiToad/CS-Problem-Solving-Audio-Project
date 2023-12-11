@@ -2,7 +2,7 @@
 from pydub import AudioSegment
 import os
 # from audioload import is_wav # This could be a circular import
-from ConvertSciPy import is_wav, compute_wav
+from Convert import is_wav, compute_wav
 from main import debugg  # Refactored into main.py module for easier user input
 
 
