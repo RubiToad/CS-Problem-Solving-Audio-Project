@@ -18,7 +18,7 @@ from frequencies import compute_frequencies # Only need the one function
 
 root = tk.Tk()  # For tkinter
 root.title("Media Player")
-root.geometry("450x400")
+root.geometry("450x700")  # originally 450x400
 
 pygame.init()  # For media player
 
@@ -27,8 +27,28 @@ filepath = 0  # For browse_file
 canvas_frame = tk.Frame(root)
 canvas_frame.pack(pady=10)
 fig, ax = plt.subplots(figsize=(4.8, 1.5), tight_layout=True)  # for display_time_waveform
+
 canvas = FigureCanvasTkAgg(fig, master=canvas_frame)
 canvas.get_tk_widget().pack()
+# It's not elegant to copy-paste code, I know!
+
+# Canvas frame for freqs
+canvas_frame_freq = tk.Frame(root)
+canvas_frame_freq.pack(pady=10)
+fig_freq, ax_freq = plt.subplots(figsize=(4.8, 1.5), tight_layout=True)  # for display_time_waveform
+
+canvas_freq = FigureCanvasTkAgg(fig, master=canvas_frame)
+canvas_freq.get_tk_widget().pack()
+
+# Canvas frame for amplitude
+canvas_frame_amp = tk.Frame(root)
+canvas_frame_amp.pack(pady=10)
+fig_amp, ax_amp = plt.subplots(figsize=(4.8, 1.5), tight_layout=True)  # for display_time_waveform
+
+canvas_amp = FigureCanvasTkAgg(fig, master=canvas_frame)
+canvas_amp.get_tk_widget().pack()
+
+
 
 duration_label = tk.Label(root, text="", font=('Helvetica', 10), fg="black", bd=5)
 duration_label.pack(pady=10)
@@ -41,19 +61,16 @@ def browse_file():
         filetypes=[("mp3 files", ".mp3"), ("Video Files", ".mp4"), (".wav files", ".wav"), (".ogg files", ".ogg")])
 
     if filepath:
-        print(f"File name: {os.path.basename(filepath)}")
         filepath = compute_wav(filepath)  # Must be done first.
         filepath = convert_1chan(filepath)  # Comment out Ben's functions, and .mp3 files play.
-        display_time_waveform(filepath)
-        compute_frequencies(filepath)  # Comment out Ben's functions, and .mp3 files play.
+        display_time_waveform(filepath, ax, canvas)
+        compute_frequencies(filepath, ax_freq, canvas_freq)  # Comment out Ben's functions, and .mp3 files play.
         play_file(filepath)  # Must be done last. Pygame can play files without conversion.
     else:
-        debugg('How Did We Get Here?')
+        print('No audio file selected')  # Could also be debugg tbh
 
 
-def display_time_waveform(filepath):
-    # Uses soundfile, numpy, and matplotlib
-    # Uses filepath, ax
+def display_time_waveform(filepath, ax, canvas):
     # Plots waveform by time
     audio_data, sample_rate = sf.read(filepath, dtype='int16')
     audio_data = audio_data / np.max(np.abs(audio_data), axis=0)
