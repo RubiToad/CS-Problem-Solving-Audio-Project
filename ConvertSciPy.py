@@ -5,7 +5,7 @@ from main import debugg
 
 
 def compute_wav(filepath):
-    debugg(f"File name before wav conversion: {os.path.basename(wav_filepath)}")
+    debugg(f"File name before wav conversion: {os.path.basename(filepath)}")
     if not is_wav(filepath):
         print("File is not WAV. Converting to WAV...")
         wav_filepath = wav_convert(filepath)
@@ -28,4 +28,3 @@ def wav_convert(filepath):
     wav_filepath = filepath.replace(os.path.splitext(filepath)[1], '.wav')
     shutil.copyfile(filepath, wav_filepath)
     return wav_filepath
-

@@ -1,9 +1,7 @@
 # Imports for cleaning meta-data
 # From L26
 ##
-from os import path
-from pydub import utils, AudioSegment
-from pydub.playback import play
+from pydub import AudioSegment
 import os
 # from audioload import is_wav # This is a circular import
 from ConvertSciPy import is_wav, compute_wav
@@ -14,7 +12,8 @@ from main import debugg  # Refactored into main.py module for easier user input
 def convert_1chan(filepath):
     debugg(f"convert_1chan filepath: {filepath}\n")
     if is_wav(filepath):  # comment out for prod
-        if is_1chan(filepath) != 1:
+        raw_audio = convert_raw_audio(filepath=filepath)
+        if raw_audio.channels != 1:
             debugg("is_1chan false")
             raw_audio = AudioSegment.from_file(  # TODO: Don't copy-paste this raw_audio call from is_1chan.
                 filepath,
@@ -41,14 +40,14 @@ def convert_1chan(filepath):
             return filepath
     else:
         debugg('Convert to wav BEFORE calling convert_1chan! Here, I\'ll convert it for you.')
-        compute_wav(filepath)
-        return filepath
+        filepath = compute_wav(filepath)
+        return convert_1chan(filepath)
 
 
 def convert_raw_audio(filepath):  # Once called is_1chan(filepath)
     if is_wav(filepath):
         debugg(f"convert_raw_audio: {filepath}")
-        raw_audio = AudioSegment.from_file( # TODO: This line throws CouldntDecodeError for mp3 files.
+        raw_audio = AudioSegment.from_file(  # TODO: This line throws CouldntDecodeError for non-test files.
             filepath,
             format="wav"
         )
