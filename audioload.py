@@ -18,7 +18,7 @@ from frequencies import compute_frequencies # Only need the one function
 
 root = tk.Tk()  # For tkinter
 root.title("Media Player")
-root.geometry("300x350")
+root.geometry("450x400")
 
 pygame.init()  # For media player
 
@@ -29,6 +29,9 @@ canvas_frame.pack(pady=10)
 fig, ax = plt.subplots(figsize=(4.8, 1.5), tight_layout=True)  # for display_time_waveform
 canvas = FigureCanvasTkAgg(fig, master=canvas_frame)
 canvas.get_tk_widget().pack()
+
+duration_label = tk.Label(root, text="", font=('Helvetica', 10), fg="black", bd=5)
+duration_label.pack(pady=10)
 
 # pydubLogger()
 
@@ -67,10 +70,7 @@ def display_time_waveform(filepath):
     canvas.draw()
 
     duration_text = f"Duration: {duration:.2f} seconds" + "\n" + filepath
-    canvas.get_tk_widget().delete("duration_label")
-    duration_label = tk.Label(root, text=duration_text, font=('Helvetica', 10), fg="black", bd=5)
-    duration_label.pack(pady=10)
-    duration_label.bind("<Configure>", lambda e: canvas.draw())
+    duration_label.config(text=duration_text)
 
 
 def play_file(filepath):
@@ -92,7 +92,7 @@ def stop_file():
 
 def about_us():
     messagebox.showinfo("About Media Player",
-                        "Press the Load Audio File button and select the audio file you wish to load. If you want the audio file to stop playing, you can press pause.")
+                        "A simple media player program created in Python using Tkinter and Pygame.")
 
 
 browse_button = tk.Button(root, text="Load Audio File", command=browse_file)
@@ -107,7 +107,7 @@ resume_button.pack()
 stop_button = tk.Button(root, text="Stop", command=stop_file)
 stop_button.pack()
 
-about_us_button = tk.Button(root, text="How to Use", command=about_us)
+about_us_button = tk.Button(root, text="About Media Player", command=about_us)
 about_us_button.pack()
 
 # root.mainloop()  # Moved to main.py
