@@ -6,24 +6,20 @@ import matplotlib.pyplot as plt  # Frequencies.py
 from main import debugg
 
 
-def compute_frequencies(filepath):  # main
+def compute_frequencies(filepath, ax_freq, canvas_freq):  # main
     sample_rate, data = wavfile.read(filepath)
     spectrum, freqs, t, im = plt.specgram(data, Fs=sample_rate,
                                           NFFT=1024, cmap=plt.get_cmap('autumn_r'))  # L25 Slide 14
 
     data_in_db = frequency_check(spectrum, freqs)
     debugg(f'data_in_db {data_in_db[:10]}')
-    plt.figure()
     # plot reverb time on grid
-    plt.plot(t, data_in_db, linewidth=1, alpha=0.7, color='#004bc6')
-    plt.xlabel('Time (s)')
-    plt.ylabel('Power (dB)')
 
     # find an index of a max value
     index_of_max = np.argmax(data_in_db)
     # Find maximum value of dB's (decibel is logarithmic) in array
     value_of_max = data_in_db[index_of_max]
-    plt.plot(t[index_of_max], data_in_db[index_of_max], 'go')
+    ax_freq.plot(t[index_of_max], data_in_db[index_of_max], 'go')
 
     # slice array from a max value
     # Slice data and time arrays to location of maximum value
@@ -34,14 +30,14 @@ def compute_frequencies(filepath):  # main
     value_of_max_less_5 = find_nearest_value(sliced_array, value_of_max_less_5)
 
     index_of_max_less_5 = np.where(data_in_db == value_of_max_less_5)
-    plt.plot(t[index_of_max_less_5], data_in_db[index_of_max_less_5], 'yo')
+    ax_freq.plot(t[index_of_max_less_5], data_in_db[index_of_max_less_5], 'yo')
 
     # slice array from a max -5dB
     value_of_max_less_25 = value_of_max - 25
     value_of_max_less_25 = find_nearest_value(sliced_array, value_of_max_less_25)
     index_of_max_less_25 = np.where(data_in_db == value_of_max_less_25)
 
-    plt.plot(t[index_of_max_less_25], data_in_db[index_of_max_less_25], 'ro')
+    ax_freq.plot(t[index_of_max_less_25], data_in_db[index_of_max_less_25], 'ro')
     # Calculate RT20 as time it takes amplitude to drop from max (less 5dB) to max (less 25dB)
     rt20 = (t[index_of_max_less_5] - t[index_of_max_less_25])[0]
     debugg(f'rt20= {rt20}')
@@ -53,6 +49,13 @@ def compute_frequencies(filepath):  # main
     plt.grid()  # show grid
     plt.show()  # show plots
 
+    ax_freq.clear()
+    ax_freq.plot(t, data_in_db, linewidth=1, alpha=0.7, color='#004bc6')
+    ax_freq.axhline(y=0, color='gray', linestyle='--', linewidth=1)
+    ax_freq.set_xlabel('Time (s)')
+    ax_freq.set_ylabel('Power (dB)')
+
+    canvas_freq.draw()
     print(f'The RT60 reverb time at freq {int(find_target_frequency(freqs))} is {round(abs(rt60), 2)} seconds')
 
 
