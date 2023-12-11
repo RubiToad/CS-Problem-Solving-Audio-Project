@@ -3,7 +3,7 @@ The objective of this program is to load an audio file from someone's computer. 
 # Why was it made?
 This project was assigned as a part of my COP2080 CS Problem Solving and Solution Class. It was our final project, where we worked together for a month as an introduction to using GitHub.
 # How to Use
-There is an instrucitonal button that provides more info, but just click to load you audio and select the audio you want to load!
+There is an instructional button that provides more info, but just click to load you audio and select the audio you want to load!
 
 # Citations
 This project uses audio loading code derived from...

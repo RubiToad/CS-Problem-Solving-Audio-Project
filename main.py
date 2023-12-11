@@ -1,3 +1,5 @@
+# Controller (Accidentally the minority of the project)
+# Install requirements using pip install -r requirements.txt in your terminal
 from audioload import *
 
 

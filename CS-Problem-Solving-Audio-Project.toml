@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "example_package_cnavarro"
+version = "0.0.1"
+authors = [
+  { name="Christian Navarro", email="cnavarro@floridapoly.edu" },
+    { name="Benjamin Voor", email="bvoor3475@floridapoly.edu" },
+    { name="Michael Mille", email="mmille183@gmail.com" },
+    { name="Tyler Mondalto", email="tylermondalto@gmail.com" }
+]
+description = "The objective of this program is to load an audio file from someone's computer. It will display a variety of data, along with display plots of wavelength and RT60 values."
+readme = "README.md"
+requires-python = ">=3.11.4"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/RubiToad/CS-Problem-Solving-Audio-Project/"
+Issues = "https://github.com/RubiToad/CS-Problem-Solving-Audio-Project/issues"

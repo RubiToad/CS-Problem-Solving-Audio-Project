@@ -1,6 +1,4 @@
-# Imports for cleaning meta-data
-# From L26
-##
+# A model for cleaning meta-data
 from pydub import AudioSegment
 import os
 # from audioload import is_wav # This could be a circular import

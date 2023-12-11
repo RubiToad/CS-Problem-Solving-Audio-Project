@@ -1,7 +1,7 @@
-# Prevent potential circular import between audioload.py and audioloadClean.py
+# A model for converting file format
 import os
-# import shutil  # Replaced with Pydub!
 from pydub import AudioSegment
+
 from main import debugg
 
 

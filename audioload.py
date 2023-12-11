@@ -1,3 +1,4 @@
+# View (Accidentally the bulk of the project).
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
@@ -47,7 +48,7 @@ def browse_file():
         compute_frequencies(filepath)  # Comment out Ben's functions, and .mp3 files play.
         play_file(filepath)  # Must be done last. Pygame can play files without conversion.
     else:
-        debugg('Audio file not selected')
+        print('Audio file not selected')
 
 
 def display_time_waveform(filepath):

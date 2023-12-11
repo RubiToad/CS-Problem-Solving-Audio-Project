@@ -1,8 +1,8 @@
-from scipy.io import wavfile  # Frequencies.py
-import numpy as np  # Frequencies.py
-import matplotlib.pyplot as plt  # Frequencies.py
+# A model for computing frequencies
+from scipy.io import wavfile
+import numpy as np
+import matplotlib.pyplot as plt
 
-# from audioload import is_wav
 from main import debugg
 
 
