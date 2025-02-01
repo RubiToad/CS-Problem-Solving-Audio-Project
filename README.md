@@ -1,5 +1,10 @@
-# Audio Project Group 14
+# Scientific Python Interactive Data Acoustic Modeling
 The objective of this program is to load an audio file from someone's computer. It will display a variety of data, along with display plots of wavelength and RT60 values.
+
+# Report
+
+The report is available in .pdf and .docx format under the filename "Project-Scientific Python Interactive Data Acoustic Modeling
+
 # Why was it made?
 This project was assigned as a part of my COP2080 CS Problem Solving and Solution Class. It was our final project, where we worked together for a month as an introduction to using GitHub.
 # How to Use
